@@ -1,6 +1,8 @@
 package com.company;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -20,7 +22,9 @@ public class Directory extends DiskElement {
         super(path, depth);
         setDirectory(getFile().isDirectory());
         setTyp("Directory");
-        children = new TreeSet<DiskElement>();
+//        children = new TreeSet<DiskElement>();
+//        children = new HashSet<DiskElement>();
+        children = new TreeSet<>(DiskElement.DiskElementComperator);
         createChilds();
     }
 
@@ -31,6 +35,7 @@ public class Directory extends DiskElement {
             string += "-";
         }
         string += " " + getBasename();
+        string = String.format("%-30s %-15d %s", string, 134, "yolo");
         System.out.println(string);
         for (DiskElement element : children) {
             element.print();
@@ -57,5 +62,13 @@ public class Directory extends DiskElement {
                 }
             }
         }
+    }
+
+    public Set<DiskElement> getChildren() {
+        return children;
+    }
+
+    public void setChildren(Set<DiskElement> children) {
+        this.children = children;
     }
 }

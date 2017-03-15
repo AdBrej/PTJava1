@@ -2,6 +2,8 @@ package com.company;
 
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
 
@@ -14,5 +16,6 @@ public class Main {
         factory factory = new factory();
         DiskElement diskElement = factory.factor(new File(args[0]), 0);
         diskElement.print();
+//        List list = new ArrayList()
     }
 }

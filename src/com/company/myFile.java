@@ -24,6 +24,7 @@ public class myFile extends DiskElement {
             string += "-";
         }
         string += " " + getBasename();
+        string = String.format("%-30s %-20d", string, 134);
         System.out.println(string);
     }
 

@@ -2,7 +2,9 @@ package com.company;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.Objects;
 
 /**
  * Created by Brej on 14.03.2017.
@@ -37,18 +39,44 @@ public abstract class DiskElement implements java.lang.Comparable<DiskElement>{
         this(path, 0);
     }
 
+
+    public static Comparator<DiskElement> DiskElementComperator = new Comparator<DiskElement>() {
+        @Override
+        public int compare(DiskElement o1, DiskElement o2) {
+            if(o1.getFile().isDirectory()){
+                return -1;
+            }
+            return o1.compareTo(o2);
+        }
+    };
+
     @Override
     public int compareTo(DiskElement other) {
-        return 1;
+        int result = getBasename().compareTo(other.getBasename());
+        if(result == 0){
+            return getLastModified().compareTo(other.getLastModified());
+        }
+        return result;
     }
     @Override
     public int hashCode() {
-        return super.hashCode();
+        int hash = 13;
+        hash = getDepth() * hash + Objects.hashCode(getBasename());
+        hash = getDepth() * hash + Objects.hashCode(getFile());
+        hash = getDepth() * hash + Objects.hashCode(getTyp());
+        hash = getDepth() * hash + Objects.hashCode(getLastModified());
+        hash = getDepth() * hash + Objects.hashCode(getPath());
+        return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
-        return getFile().equals(obj);
+        if(obj == null) return false;
+        if (this.getClass() == obj.getClass()){
+            DiskElement o = (DiskElement) obj;
+            return getFile().equals(o.getFile());
+        }
+        return false;
     }
 
 
